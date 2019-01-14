@@ -1,0 +1,15 @@
+.box{
+    margin: 10px;
+    border: 2px solid #ddd;
+}
+
+.box img{
+    max-width: 100%;
+}
+
+@media (min-width: 450px){
+    .box{
+        display: inline-block;
+        width: 25%;
+    }
+}

@@ -2,17 +2,29 @@ import csv
 
 from flask import Flask
 from flask import request
+import requests
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
+    response = requests.get('https://swapi.co/api/planets/')
+    data = response.json()
+
+    planets = data['results']
+
+    planet_html = []
+
+    for planet in planets:
+        planet_html.append('<li>{} :: {}</li>'.format(planet['name'], planet['climate']))
+
+    planet_html = ''.join(planet_html)
 
     # Get html and render to screen
     index_file = open('index.html', 'r')
     index_html = index_file.read()
-    # index_html = index_html.replace('{{blog_posts}}', blog_post_html)
+    index_html = index_html.replace('{{planet_list}}', planet_html)
     index_file.close()
 
     return index_html
